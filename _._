@@ -1,0 +1,11 @@
+
+#ifndef ASSTREAM_H
+#define ASSTREAM_H
+
+#include <iostream>
+
+struct asstream {
+  std::istream& _ = std::cin;
+} _;
+
+#endif
