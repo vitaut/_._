@@ -7,22 +7,22 @@ namespace {
 
 // A simple stream.
 struct asstream {
-  struct asstream_tag {};
-  asstream_tag _;
+  struct tag {};
+  tag _;
 
-  asstream_tag& operator*(asstream&) { return _; }
+  tag& operator*(asstream&) { return _; }
 } _;
 
 // Push (shove) operator.
 template <typename T>
-std::ostream& operator<<(asstream::asstream_tag&, const T& o) {
+std::ostream& operator<<(asstream::tag&, const T& o) {
   std::cout << o;
   return std::cout;
 }
 
 // Pull operator.
 template <typename T>
-std::istream& operator>>(asstream::asstream_tag&, T& o) {
+std::istream& operator>>(asstream::tag&, T& o) {
   std::cin >> o;
   return std::cin;
 }
