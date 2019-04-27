@@ -4,7 +4,20 @@
 #include <iostream>
 
 struct asstream {
-  std::istream& _ = std::cin;
+  struct asstream_tag {};
+  asstream_tag _;
 } _;
+
+template <typename T>
+asstream::asstream_tag& operator<<(asstream::asstream_tag& as, const T& o) {
+  std::cout << o;
+  return as;
+}
+
+template <typename T>
+asstream::asstream_tag& operator>>(asstream::asstream_tag& as, T& o) {
+  std::cin >> o;
+  return as;
+}
 
 #endif
