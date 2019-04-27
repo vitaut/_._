@@ -6,18 +6,20 @@
 struct asstream {
   struct asstream_tag {};
   asstream_tag _;
+
+  asstream_tag& operator*(asstream&) { return _; }
 } _;
 
 template <typename T>
-asstream::asstream_tag& operator<<(asstream::asstream_tag& as, const T& o) {
+std::ostream& operator<<(asstream::asstream_tag&, const T& o) {
   std::cout << o;
-  return as;
+  return std::cout;
 }
 
 template <typename T>
-asstream::asstream_tag& operator>>(asstream::asstream_tag& as, T& o) {
+std::istream& operator>>(asstream::asstream_tag&, T& o) {
   std::cin >> o;
-  return as;
+  return std::cin;
 }
 
 #endif
