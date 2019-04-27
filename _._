@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-namespace
-{
+namespace {
+
 // A simple stream.
 struct asstream {
   struct asstream_tag {};
@@ -27,4 +27,5 @@ std::istream& operator>>(asstream::asstream_tag&, T& o) {
   return std::cin;
 }
 } // namespace
+
 #endif
