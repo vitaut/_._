@@ -1,4 +1,4 @@
-# A super stream
+# A simple streaming library
 
 Usage:
 
