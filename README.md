@@ -1,5 +1,7 @@
 # A simple streaming library
 
+This library provides a convenient shorthand notation for using standard input and output streams.
+
 Usage:
 
 ```c++
