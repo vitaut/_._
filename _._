@@ -28,47 +28,65 @@
 
 namespace {
 
-// A simple stream.
-struct asstream {
-  struct tag {};
-  tag _;
+template <typename Char, typename Traits = std::char_traits<Char>>
+struct basic_asstream {
+  struct tag {
+    void set_ostream(std::basic_ostream<Char, Traits>* os) { this->os = os; }
 
-  tag& operator*(asstream&) { return _; }
+    void set_istream(std::basic_istream<Char, Traits>* is) { this->is = is; }
+
+    // Push operator.
+    template <typename T>
+    std::basic_ostream<Char, Traits>& operator<<(const T& o) {
+      if (os == nullptr) {
+        throw std::ios_base::failure("not initialized");
+      }
+
+      *os << o;
+      return *os;
+    }
+
+    // Pull operator.
+    template <typename T>
+    std::basic_istream<Char, Traits>& operator>>(T& o) {
+      if (os == nullptr) {
+        throw std::ios_base::failure("not initialized");
+      }
+
+      *is >> o;
+      return *is;
+    }
+
+   private:
+    std::basic_ostream<Char, Traits>* os;
+    std::basic_istream<Char, Traits>* is;
+  };
+
+  tag& operator*(const basic_asstream&) { return as; }
+
+ protected:
+  tag as;
+};
+
+// A simple stream.
+struct asstream final : basic_asstream<char> {
+  tag& _;
+
+  asstream() : _{as} {
+    _.set_ostream(&std::cout);
+    _.set_istream(&std::cin);
+  }
 } _;
 
-// Push (shove) operator.
-template <typename T>
-std::ostream& operator<<(asstream::tag&, const T& o) {
-  std::cout << o;
-  return std::cout;
-}
-
-// Pull operator.
-template <typename T>
-std::istream& operator>>(asstream::tag&, T& o) {
-  std::cin >> o;
-  return std::cin;
-}
-
 // A simple stream which is also wide.
-struct wide_asstream {
-  struct tag {};
-  tag __;
+struct wide_asstream final : basic_asstream<wchar_t> {
+  tag& __;
 
-  tag& operator*(wide_asstream&) { return __; }
+  wide_asstream() : __{as} {
+    __.set_ostream(&std::wcout);
+    __.set_istream(&std::wcin);
+  }
 } __;
-
-template <typename T>
-std::wostream& operator<<(wide_asstream::tag&, const T& o) {
-  std::wcout << o;
-  return std::wcout;
-}
-
-template <typename T>
-std::wistream& operator>>(wide_asstream::tag&, T& o) {
-  std::wcin >> o;
-  return std::wcin;
-}
 
 } // namespace
 
