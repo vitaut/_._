@@ -6,13 +6,16 @@ Usage:
 #include <_._>
 
 int main() {
+  // Pushing an object into a simple stream:
   (_._) << "Hello World!\n";
+  
+  // Pulling an object out of a simple stream:
   int i;
   (_._) >> i;
 }
 ```
 
-Alternative syntax
+Alternative syntax:
 ```c++
 #include <_._>
 
