@@ -50,6 +50,26 @@ std::istream& operator>>(asstream::tag&, T& o) {
   return std::cin;
 }
 
+// A simple stream which is also wide.
+struct wide_asstream {
+  struct tag {};
+  tag __;
+
+  tag& operator*(wide_asstream&) { return __; }
+} __;
+
+template <typename T>
+std::wostream& operator<<(wide_asstream::tag&, const T& o) {
+  std::wcout << o;
+  return std::wcout;
+}
+
+template <typename T>
+std::wistream& operator>>(wide_asstream::tag&, T& o) {
+  std::wcin >> o;
+  return std::wcin;
+}
+
 } // namespace
 
 #endif
