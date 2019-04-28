@@ -14,6 +14,9 @@ int main() {
   // Pulling an object out of a simple stream:
   int i;
   (_._) >> i;
+  
+  // Wide stream:
+  (__.__) >> i;
 }
 ```
 
