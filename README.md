@@ -21,3 +21,11 @@ int main() {
 ```
 
 Alternatively, you can use `(_*_)` instead of `(_._)`.
+
+## CMake usage example
+
+```cmake
+find_package(_._)
+add_executable(app app.cc)
+target_link_libraries(app _._)
+```
