@@ -57,9 +57,23 @@ struct basic_asstream {
       return *is;
     }
 
+    tag& operator,(basic_asstream&) { return *this; }
+
    private:
     std::basic_ostream<Char, Traits>* os;
     std::basic_istream<Char, Traits>* is;
+  };
+
+  template<typename T>
+  std::basic_istream<Char, Traits>& operator>>(T&&) {
+    static_assert (![]{}, "You should use parentheses around a simple stream expression");
+    std::terminate(); // Never called.
+  };
+
+  template<typename T>
+  std::basic_ostream<Char, Traits>& operator<<(T&&) {
+    static_assert (![]{}, "You should use parentheses around a simple stream expression");
+    std::terminate(); // Never called.
   };
 
   tag& operator*(const basic_asstream&) { return as; }
@@ -89,5 +103,8 @@ struct wide_asstream final : basic_asstream<wchar_t> {
 } __;
 
 } // namespace
+
+#define _ _,_
+#define __ __,__
 
 #endif
