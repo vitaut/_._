@@ -5,6 +5,7 @@ add_library(_._ INTERFACE)
 include(CTest)
 include(GNUInstallDirs)
 target_include_directories(_._ INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+add_custom_target(__.__ SOURCES _._)
 
 # Tests and examples
 if(ENABLE_TESTING)
